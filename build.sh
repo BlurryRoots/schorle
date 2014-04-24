@@ -1,7 +1,7 @@
 path_to_name () {
     str=$1
     part=${str#*views/} # remove path above views
-    part=${part/\//_}   # replace all / with _
+    part=${part//\//_}   # replace all / with _
     part=${part/.mustache/_tpl}
     echo "$part"
 }

@@ -1,8 +1,14 @@
 path_to_name () {
+	# get name as first argument
     str=$1
-    part=${str#*views/} # remove path above views
-    part=${part//\//_}   # replace all / with _
+    # remove path above views
+    part=${str#*views/}
+    # replace all / with _
+    part=${part//\//_}
+    # replace the mustache file name part with tpl, ids with dots are
+    # problematic in it well think of css classes :/
     part=${part/.mustache/_tpl}
+    # return new string
     echo "$part"
 }
 

@@ -1,2 +1,2 @@
-build:
-	sed -i 's/'$pattern'/'$replacement'/g'
+all:
+	./build.sh

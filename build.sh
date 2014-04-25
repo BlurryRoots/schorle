@@ -21,14 +21,21 @@ for template in $(find ./ -name *mustache); do
     scripts="$scripts$(embrace $(path_to_name $template) "$(cat $template)")"
 done
 
-##
-#
+## building steps
+
+# clean up
 rm -rf build
 mkdir build
-#
+
+# build main file
+cp src/main.js build/main.js
+for i in $(sed -rn "s/#include\('([^';\(\)]*)'\);/\1/p" src/main.js); do
+    main=$(cat build/main.js)
+    pattern="\#include(\'$i\');"
+    file=$(cat src/lib/$i)
+    echo "${main/$pattern/$file}" > build/main.js
+done
+
+# build index file
 index=$(cat src/index.html)
 echo "${index/§.templates/$scripts}" > build/index.html
-#
-mkdir -p build/app/lib
-cp -R src/app/lib/* build/app/lib/
-cp src/app/main.js build/app/
